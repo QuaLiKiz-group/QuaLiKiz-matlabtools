@@ -18,13 +18,9 @@ if isempty(runname) == 1
 	end
 end
 
-parameters; %will read parameter file previously placed by user in newly created run directory
+JETTO2QuaLiKiz; %will ask user which pulse, JETTO run and time
 
-WriteQLKBatchPBS(runname,nprocs) %for Cephee
-%Calculate auxilliary quantities for plotting
-Epsilonx=Rmin.*x./Ro;
-ft=2.*(2.*Epsilonx).^(0.5)./pi; %trapped particle fraction
-tau=Tex./Tix(:,1);
+%WriteQLKBatchPBS(runname,nprocs) %write jobs to be submitted in batch
 
 %%Quasineutrality (including gradients) test and Zeff calculation
 ninormd=ninorm;
@@ -33,16 +29,16 @@ ninormd(ion_type==4)=0; %zero out tracers for QN check
 
 if (set_ninorm1 == 1) && (nions > 1) %sets ninorm of 1st species to maintian quasineutrality
    if nions > 2
-      ninorm(:,1) = (1 - sum(ninormd(:,2:end)'.*Zi(:,2:end)')')./Zi(:,1);
+      ninorm(1,:) = (1 - sum(ninormd(2:end,:).*Zi(2:end,:))')./Zi(1,:);
    else
-      ninorm(:,1) = (1 - ninormd(:,2).*Zi(:,2))./Zi(:,1);
+      ninorm(1,:) = (1 - ninormd(2,:).*Zi(2,:))./Zi(1,:);
    end
 end
 if (set_Ani1 == 1 && nions > 1) %sets Ani of 1st species to maintian quasineutrality
    if nions > 2
-       Ani(:,1) = (Ane - sum(ninormd(:,2:end)'.*Ani(:,2:end)'.*Zi(:,2:end)')')./(Zi(:,1).*ninorm(:,1));
+       Ani(1,:) = (Ane - sum(ninormd(2:end,:).*Ani(2:end,:).*Zi(2:end,:))')./(Zi(1,:).*ninorm(1,:));
    else
-       Ani(:,1) = (Ane - ninormd(:,2).*Ani(:,2).*Zi(:,2))./(Zi(:,1).*ninorm(:,1));
+       Ani(1,:) = (Ane - ninormd(2,:).*Ani(2,:).*Zi(2,:))./(Zi(1,:).*ninorm(1,:));
    end
 end
 
@@ -52,9 +48,9 @@ quasitol=1e-5;
 
 for i = 1:scann
   for j = 1:nions
-    if ion_type(i,j) < 3
-      quasicheck(i)=quasicheck(i) + Zi(i,j).*ninorm(i,j);
-      quasicheck_grad(i)=quasicheck_grad(i) + Zi(i,j).*ninorm(i,j).*Ani(i,j);
+    if ion_type(j,i) < 3
+      quasicheck(i)=quasicheck(i) + Zi(j,i).*ninorm(j,i);
+      quasicheck_grad(i)=quasicheck_grad(i) + Zi(j,i).*ninorm(j,i).*Ani(j,i);
     end
   end
 end
@@ -75,45 +71,53 @@ end
 ninormz=ninorm;
 ninormz(ion_type==3)=0; %zero out tracers for Zeff calc
 for i=1:scann  	   
-   Zeffx(i)=sum(ninormz(i,:).*Zi(i,:).^2); %calculate Zeff
+   Zeffx(i)=sum(ninormz(:,i).*Zi(:,i).^2); %calculate Zeff
 end
 
+%Calculate auxilliary quantities for plotting
+ft=2.*(2.*epsilonx).^(0.5)./pi; %trapped particle fraction
+tau=Tex./Tix(1,:);
+Lambe=1-0.078.*log10(Nex.*0.1)+0.15.*log10(Tex);
+Nue=1.36e5.*Lambe.*Nex.*0.1./(Tex.^1.5).*Zeffx; % e-main ions collisionality
+q_ele  = 1.6022e-19;
+me     = 9.1094e-31;
+cthe=sqrt(2*Tex*1e3*q_ele./me);
+Athe=cthe./(qx.*R0);
+Nuestar = Nue./(epsilonx.^1.5.*Athe);
+
 figure; 
-disp('Figures displayed such that the input data can be verified by eye') 
+disp('Figures to verify key data as expected before sending QuaLiKiz run') 
 subplot(221)
 set(gca,'FontSize',18)
-plot(1:scann,Ati(:,1),'r',1:scann,Tix(:,1),'r--',1:scann,Ate,'b',1:scann,Tex,'b--','LineWidth',2)
-xlabel('Scan index')
-
-l1=legend('-R\nabla{T_i}/T_i','Ti','-R\nabla{T_e}/T_e','T_e');
-set(l1,'FontSize',12)
-legend boxoff
+plot(x,Ati(1,:),'r',x,Tix(1,:),'r--',x,Ate,'b',x,Tex,'b--','LineWidth',2)
+l1=legend('-$R\nabla{T_i}/T_i$','$T_i$','-$R\nabla{T_e}/T_e$','$T_e$');
+set(l1,'Interpreter','latex')
+l2=xlabel('$\rho$');
+set(l2,'Interpreter','latex')
 grid on
 subplot(222)
 set(gca,'FontSize',18)
-plot(1:scann,Ane,'g',1:scann,Nex,'g--','LineWidth',2)
-xlabel('Scan index')
-
-l2=legend('-R\nabla{n_e}/n_e','n_e');
-set(l2,'FontSize',12)
-legend boxoff
+plot(x,Ane,'g',x,Nex,'g--','LineWidth',2)
+l1=legend('-$R\nabla{n_e}/n_e$','$n_e$');
+set(l1,'Interpreter','latex')
+l2=xlabel('$\rho$');
+set(l2,'Interpreter','latex')
 grid on
 subplot(223)
 set(gca,'FontSize',18)
-plot(1:scann,tau,'c',1:scann,Zeffx,'c--',1:scann,ft,'c-.','LineWidth',2)
-xlabel('Scan index')
-
-l3=legend('T_e/T_i','Z_{eff}','f_t');
-set(l3,'FontSize',12)
-legend boxoff
+plot(x,tau,'c',x,Zeffx,'c--',x,ft,'c-.',x,10*Nuestar,'b--','LineWidth',2)
+l1=legend('$T_e/T_i$','$Z_{eff}$','$f_t$', '$10\times\nu_e^{*}$');
+set(l1,'Interpreter','latex')
+l2=xlabel('$\rho$');
+set(l2,'Interpreter','latex')
 grid on
 subplot(224)
 set(gca,'FontSize',18)
-plot(1:scann,smag,'m',1:scann,qx,'m--',1:scann,alphax,'m-.s','LineWidth',2)
-xlabel('Scan index')
-l4=legend('s','q','\alpha');
-set(l4,'FontSize',12)
-legend boxoff
+plot(x,smag,'m',x,qx,'m--',x,alphax,'m-.s','LineWidth',2)
+l1=legend('s','q','$\alpha$');
+set(l1,'Interpreter','latex')
+l2=xlabel('$\rho$');
+set(l2,'Interpreter','latex')
 grid on
 
 %%% End
@@ -172,15 +176,15 @@ p{kc} = anise;                      kc=kc+1;%p{36}  Tperp/Tpar at LFS
 p{kc} = danisedr;                   kc=kc+1;%p{37}  d/dr(Tperp/Tpar) at LFS
 
 %Ion inputs (can be for multiple species)
-p{kc} = Ai;	            kc=kc+1;%p{38} (-) Ion mass
-p{kc} = Zi;     	    kc=kc+1;%p{39} (-) Ion charge
-p{kc} = Tix;                kc=kc+1;%p{40} (keV) Vector (radial grid x(aa))
-p{kc} = ninorm;             kc=kc+1;%p{41} ni/ne Vector (radial grid x(aa))
-p{kc} = Ati;      	    kc=kc+1;%p{42}  (-) Vector (radial grid x(aa))
-p{kc} = Ani;                kc=kc+1;%p{43}  (-) Vector (radial grid x(aa))  check calculation w.r.t. Qualikiz electroneutrality assumption
-p{kc} = ion_type;           kc=kc+1;%p{44}  Kinetic, adiabatic, tracer
-p{kc} = anis;               kc=kc+1;%p{45}  Tperp/Tpar at LFS
-p{kc} = danisdr;            kc=kc+1;%p{46}  d/dr(Tperp/Tpar) at LFS
+p{kc} = Ai';	             kc=kc+1;%p{38} (-) Ion mass
+p{kc} = Zi';     	     kc=kc+1;%p{39} (-) Ion charge
+p{kc} = Tix';                kc=kc+1;%p{40} (keV) Vector (radial grid x(aa))
+p{kc} = ninorm';             kc=kc+1;%p{41} ni/ne Vector (radial grid x(aa))
+p{kc} = Ati';      	     kc=kc+1;%p{42}  (-) Vector (radial grid x(aa))
+p{kc} = Ani';                kc=kc+1;%p{43}  (-) Vector (radial grid x(aa))  check calculation w.r.t. Qualikiz electroneutrality assumption
+p{kc} = ion_type';           kc=kc+1;%p{44}  Kinetic, adiabatic, tracer
+p{kc} = anis';               kc=kc+1;%p{45}  Tperp/Tpar at LFS
+p{kc} = danisdr';            kc=kc+1;%p{46}  d/dr(Tperp/Tpar) at LFS
 
 nargu = kc-1;
 stringind=[]; %no string indexes. Kept if adding any future string inputs
