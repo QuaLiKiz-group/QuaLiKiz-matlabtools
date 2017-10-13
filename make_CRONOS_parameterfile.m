@@ -31,6 +31,7 @@ l{k} = ['relacc2   = 2e-2;','\n']; k=k+1;
 l{k} = ['timeout   = 60;','\n']; k=k+1;
 l{k} = ['ntheta=64;','\n']; k=k+1;
 l{k} = ['numecoefs = 13;','\n']; k=k+1;
+l{k} = ['separateflux = 0;','\n']; k=k+1;
 
 l{k} = ['set_ninorm1=1;','\n']; k=k+1;
 l{k} = ['set_Ani1=1;','\n']; k=k+1;

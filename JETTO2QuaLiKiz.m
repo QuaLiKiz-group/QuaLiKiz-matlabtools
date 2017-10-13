@@ -21,6 +21,7 @@ set_Ani1=1; %flag for automating main ion gradient for maintaining QN
 set_QN_grad=1; %flag for maintaining quasineutrality of gradients.
 ETGmult=1.0; %ETG saturation rule multiplier (for testing)
 collmult=1.0; %Collisionality multiplier (for testing)
+separateflux=1.0; %Output seperate TEM/ITG/ETG fluxes to file
 
 %Set the number and range of wave number points
 kthetarhos = linspace(0.1,0.8,8); %(-) Wave spectrum input: Vector (dimn)
@@ -94,7 +95,7 @@ end
 
    x=linspace(ro,r1,scann); % (-) radial normalised coordinate (midplane average)
    
-   Bo = Bo.*ones(1,scann); %magnetic field, (T) Likely not very rigorous to use this sqrt(<B²>) for calculating the Larmor radius % quite close to <Bphi> in practice however 
+   Bo = Bo.*ones(1,scann); %magnetic field, (T) Likely not very rigorous to use this sqrt(<Bï¿½ï¿½>) for calculating the Larmor radius % quite close to <Bphi> in practice however 
    Rmin = Rmin.*ones(1,scann); % Geometric minor radius. Assumed to be a midplane average at LCFS. Currently a profile but should probably be shifted to a scalar
 
    Ro=spline(xqlk,Roj,x);

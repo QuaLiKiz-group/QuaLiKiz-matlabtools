@@ -15,6 +15,7 @@ set_Ani1=1; %flag for automating main ion gradient for maintaining QN
 set_QN_grad=1; %flag for maintaining quasineutrality of gradients.
 ETGmult=1.0; %ETG saturation rule multiplier (for testing)
 collmult=1.0; %Collisionality multiplier (for testing)
+separateflux=1.0; %Output seperate TEM/ITG/ETG fluxes to file
 
 %Set the number and range of wave number points
 kthetarhos = linspace(0.1,0.8,8);
