@@ -6,6 +6,7 @@ ind=strfind(curdir,'/'); dir_path=curdir(ind(end)+1:end);
 eval(sprintf('%s','!mkdir input'))
 eval(sprintf('%s','!mkdir output'))
 eval(sprintf('%s','!mkdir output/primitive'))
+eval(sprintf('%s','!mkdir debug'))
 eval(sprintf('%s',['!ln -s ../../src/QuaLiKiz.exe .']))
 %eval(sprintf('%s',['!ln -s ../../src/qlk_makeflux.exe .']))
 

@@ -14,12 +14,16 @@ runpath=['runs/',runname];
 
 tooldir = '.';
 eval(['!mkdir ',runpath]);
-eval(['!cp ', tooldir, '/WriteQLKBatchPBS.m ',runpath,'/.']);
-eval(['!cp ', tooldir, '/input_QLK_scan.m ',runpath,'/.']);
-eval(['!cp ', tooldir, '/make_CRONOS_parameterfile.m ',runpath,'/.']);
-eval(['!cp ', tooldir, '/getcrondat.m ',runpath,'/.']);
 eval(['!cp ', tooldir, '/avg.m ',runpath,'/.']);
+eval(['!cp ', tooldir, '/getcrondat.m ',runpath,'/.']);
+eval(['!cp ', tooldir, '/input_QLK_fromJETTO.m ',runpath,'/.']);
+eval(['!cp ', tooldir, '/input_QLK_scan.m ',runpath,'/.']);
+eval(['!cp ', tooldir, '/JETTO2QuaLiKiz.m ',runpath,'/.']);
+eval(['!cp ', tooldir, '/make_CRONOS_parameterfile.m ',runpath,'/.']);
 eval(['!cp ', tooldir, '/parameters_template.m ',runpath,'/parameters.m']);
+eval(['!cp ', tooldir, '/plot_QLK_output.m ',runpath,'/.']);
 eval(['!cp ', tooldir, '/qualikiz_names.m ',runpath,'/.']);
+eval(['!cp ', tooldir, '/WriteQLKBatchPBS.m ',runpath,'/.']);
+eval(['!cp ', tooldir, '/WriteQLKBatchSGE.m ',runpath,'/.']);
 
 eval(['cd ',runpath]);
