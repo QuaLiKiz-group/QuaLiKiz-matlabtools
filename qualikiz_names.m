@@ -4,9 +4,10 @@ name{kc} = 'dimn';         kc=kc+1;%p{2} (-) Number of wavenumbers
 name{kc} = 'nions';                      kc=kc+1;%p{3} (-) Number of ions in system
 
 %Flag input and metadata
-name{kc} = 'phys_meth';	            kc=kc+1;%p{4} (-) Flag for additional calculation (default 0.0)
-name{kc} = 'coll_flag';	            kc=kc+1;%p{5} (-) Flag for collisionality (default 0.0)
-name{kc} = 'rot_flag';	            kc=kc+1;%p{6} (-) Flag  for rotation (default 0.0)
+name{kc} = 'phys_meth';	            kc=kc+1;%p{4} (-) Flag for additional calculation (default 0)
+name{kc} = 'coll_flag';	            kc=kc+1;%p{5} (-) Flag for collisionality (default 0)
+name{kc} = 'write_primi';           kc=kc+1;%     (-) Flag for writing primitive outputs (default 1)
+name{kc} = 'rot_flag';	            kc=kc+1;%p{6} (-) Flag  for rotation (default 0)
 name{kc} = 'verbose';	            kc=kc+1;%p{7} (-) Flag  for setting level of output verbosity
 name{kc} = 'numsols';	            kc=kc+1;%p{8} (-) Number of solutions requested
 name{kc} = 'relacc1';	 	    kc=kc+1;%p{9} (-) Relative accuracy in 1D integrals

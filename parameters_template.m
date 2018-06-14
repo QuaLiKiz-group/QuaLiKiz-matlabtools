@@ -1,6 +1,7 @@
 phys_meth = 1.0;% Method on additional integrals on particle flux if not 0
 coll_flag = 1.0;% Flag for collisionless simulations if 0
 rot_flag  = 0.0;% Do not include rotation if 0
+write_primi = 0.0;% Do not write primitive outputs if 0
 verbose   = 1;  % Default verbose output
 numsols   = 3;  % Number of solutions in the output
 nprocs = 8; % Number of processors in parallel computation

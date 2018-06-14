@@ -130,9 +130,10 @@ p{kc} = length(kthetarhos);         kc=kc+1;%p{2} (-) Number of wavenumbers
 p{kc} = nions;                      kc=kc+1;%p{3} (-) Number of ions in system
 
 %Flag input and metadata
-p{kc} = phys_meth;	            kc=kc+1;%p{4} (-) Flag for additional calculation (default 0.0)
-p{kc} = coll_flag;	            kc=kc+1;%p{5} (-) Flag for collisionality (default 0.0)
-p{kc} = rot_flag;	            kc=kc+1;%p{6} (-) Flag  for rotation (default 0.0)
+p{kc} = phys_meth;	            kc=kc+1;%p{4} (-) Flag for additional calculation (default 0)
+p{kc} = coll_flag;	            kc=kc+1;%p{5} (-) Flag for collisionality (default 0)
+p{kc} = write_primi;	            kc=kc+1;%     (-) Flag for writing primitive outputs (default 1)
+p{kc} = rot_flag;	            kc=kc+1;%p{6} (-) Flag  for rotation (default 0)
 p{kc} = verbose;	            kc=kc+1;%p{7} (-) Flag  for setting level of output verbosity
 p{kc} = numsols;	            kc=kc+1;%p{8} (-) Number of solutions requested
 p{kc} = relacc1;	 	    kc=kc+1;%p{9} (-) Relative accuracy in 1D integrals
