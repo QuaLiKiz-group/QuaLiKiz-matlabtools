@@ -7,7 +7,7 @@ eval(sprintf('%s','!mkdir input'))
 eval(sprintf('%s','!mkdir output'))
 eval(sprintf('%s','!mkdir output/primitive'))
 eval(sprintf('%s','!mkdir debug'))
-eval(sprintf('%s',['!ln -s ../../src/QuaLiKiz .']))
+eval(sprintf('%s',['!ln -s ../../../src/QuaLiKiz .']))
 %eval(sprintf('%s',['!ln -s ../../src/qlk_makeflux.exe .']))
 
 runname=input('Please enter string for batch job name (e.g. ''jsmith_run10''). Hit enter for default of first 8 characters of directory path: ');
