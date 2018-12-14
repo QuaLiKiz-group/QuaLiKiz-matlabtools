@@ -6,33 +6,32 @@
 
 clear all
 
-debug_path = 'debug/';
-kthetarhos = load([debug_path, 'kthetarhos.dat']);
-Ane        = load([debug_path, 'Ane.dat']);
-Ani        = load([debug_path, 'Ani.dat']);
-Ati        = load([debug_path, 'Ati.dat']);
-Ate        = load([debug_path, 'Ate.dat']);
-qx         = load([debug_path, 'q.dat']);
-smag       = load([debug_path, 'smag.dat']);
-Tex        = load([debug_path, 'Te.dat']);
-Tix        = load([debug_path, 'Ti.dat']);
-gammaE     = load([debug_path, 'gammaE.dat']);
-Aupar      = load([debug_path, 'Aupar.dat']);
-Autor      = load([debug_path, 'Autor.dat']);
-Machpar    = load([debug_path, 'Machpar.dat']);
-Machtor    = load([debug_path, 'Machtor.dat']);
-Bo         = load([debug_path, 'Bo.dat']);
-Ro         = load([debug_path, 'Ro.dat']);
-R0         = load([debug_path, 'R0.dat']);
-Nex        = load([debug_path, 'ne.dat']);
-ninorm     = load([debug_path, 'normni.dat']);
-x          = load([debug_path, 'x.dat']);
-Zi         = load([debug_path, 'Zi.dat']);
-alphax     = load([debug_path, 'alpha.dat']);
-Ai         = load([debug_path, 'Ai.dat']);
-Rmin       = load([debug_path, 'Rmin.dat']);
-scann      = length(x);
-x = 1:scann
+kthetarhos=load('kthetarhos.dat');
+Ane=load('Ane.dat');
+Ani=load('Ani.dat');
+Ati=load('Ati.dat');
+Ate=load('Ate.dat');
+qx=load('qx.dat');
+smag=load('smag.dat');
+Tex=load('Tex.dat');
+Tix=load('Tix.dat');
+gammaE=load('gammaE.dat');
+Aupar=load('Aupar.dat');
+Autor=load('Autor.dat');
+Machpar=load('Machpar.dat');
+Machtor=load('Machtor.dat');
+Bo=load('Bo.dat');
+Ro=load('Ro.dat');
+R0=load('R0.dat');
+Nex=load('Nex.dat');
+ninorm=load('ninorm.dat');
+x=load('x.dat');
+Zi=load('Zi.dat');
+alphax=load('alphax.dat');
+Ai=load('Ai.dat');
+Rmin=load('Rmin.dat');
+scann=length(x);
+
 sizions=size(Tix);
 Zeffx=ninorm(:,1).*Zi(:,1).^2;
 if sizions(2)>1
@@ -93,17 +92,17 @@ ome_GB = load('output/ome_GB.dat');
 gam_SI = load('output/gam_SI.dat');
 ome_SI = load('output/ome_SI.dat');
 
-ief_SI = load('output/efi_SI.dat'); 
-ief_GB = load('output/efi_GB.dat'); 
+ief_SI = load('output/ief_SI.dat'); 
+ief_GB = load('output/ief_GB.dat'); 
 
-eef_SI = load('output/efe_SI.dat'); 
-eef_GB = load('output/efe_GB.dat'); 
+eef_SI = load('output/eef_SI.dat'); 
+eef_GB = load('output/eef_GB.dat'); 
 
-ipf_SI = load('output/pfi_SI.dat'); 
-ipf_GB = load('output/pfi_GB.dat'); 
+ipf_SI = load('output/ipf_SI.dat'); 
+ipf_GB = load('output/ipf_GB.dat'); 
 
-epf_SI = load('output/pfe_SI.dat'); 
-epf_GB = load('output/pfe_GB.dat'); 
+epf_SI = load('output/epf_SI.dat'); 
+epf_GB = load('output/epf_GB.dat'); 
 
 vce_SI = load('output/vce_SI.dat'); 
 vte_SI = load('output/vte_SI.dat'); 
@@ -116,7 +115,7 @@ vri_SI = load('output/vri_SI.dat');
 dfi_SI = load('output/dfi_SI.dat'); 
 dfe_SI = load('output/dfe_SI.dat'); 
 
-phi = load('debug/phi.dat'); 
+phi = load('output/phi.dat'); 
 
 rmodewidth = load('output/primitive/rmodewidth.dat');
 imodewidth = load('output/primitive/imodewidth.dat');

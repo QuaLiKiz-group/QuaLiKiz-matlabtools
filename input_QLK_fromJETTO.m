@@ -6,9 +6,8 @@ ind=strfind(curdir,'/'); dir_path=curdir(ind(end)+1:end);
 eval(sprintf('%s','!mkdir input'))
 eval(sprintf('%s','!mkdir output'))
 eval(sprintf('%s','!mkdir output/primitive'))
-eval(sprintf('%s','!mkdir debug'))
 eval(sprintf('%s',['!ln -s ../../src/QuaLiKiz.exe .']))
-%eval(sprintf('%s',['!ln -s ../../src/qlk_makeflux.exe .']))
+eval(sprintf('%s',['!ln -s ../../src/qlk_makeflux.exe .']))
 
 runname=input('Please enter string for batch job name (e.g. ''jsmith_run10''). Hit enter for default of first 8 characters of directory path: ');
 if isempty(runname) == 1
@@ -124,7 +123,7 @@ grid on
 %%% End
 
 if(1)
-qualikiz_names;
+
 %%% Saving binary files
 %% ---------------------------------
 %% MANAGING QUALIKIZ INPUT VARIABLES
@@ -154,7 +153,7 @@ p{kc} = x;                          kc=kc+1;%p{17} (-) radial normalised coordin
 p{kc} = rho;                        kc=kc+1;%p{18} (-) normalized toroidal flux coordinate
 p{kc} = Ro;		            kc=kc+1;%p{19} (m) Major radius. Radial profile due to Shafranov shift
 p{kc} = Rmin;	                    kc=kc+1;%p{20} (m) Geometric minor radius. Assumed to be a midplane average at LCFS. Currently a profile but should probably be shifted to a scalar
-p{kc} = Bo;		            kc=kc+1;%p{21} (T) Likely not very rigorous to use this sqrt(<Bï¿½ï¿½>) for calculating the Larmor radius % quite close to <Bphi> in practice however 
+p{kc} = Bo;		            kc=kc+1;%p{21} (T) Likely not very rigorous to use this sqrt(<B²>) for calculating the Larmor radius % quite close to <Bphi> in practice however 
 p{kc} = R0;		            kc=kc+1;%p{22} (m) Geometric major radius used for normalizations
 p{kc} = qx;               	    kc=kc+1;%p{23} (-) Vector (radial grid x(aa))
 p{kc} = smag;            	    kc=kc+1;%p{24} (-) Vector (radial grid x(aa))  q is a flux surface quantity --> makes sense to consider s = rho/q dq/drho
@@ -186,7 +185,6 @@ p{kc} = Ani';                kc=kc+1;%p{43}  (-) Vector (radial grid x(aa))  che
 p{kc} = ion_type';           kc=kc+1;%p{44}  Kinetic, adiabatic, tracer
 p{kc} = anis';               kc=kc+1;%p{45}  Tperp/Tpar at LFS
 p{kc} = danisdr';            kc=kc+1;%p{46}  d/dr(Tperp/Tpar) at LFS
-p{kc} = separateflux;            kc=kc+1;%p{47}  Output seperate fluxes
 
 nargu = kc-1;
 stringind=[]; %no string indexes. Kept if adding any future string inputs
@@ -198,7 +196,7 @@ for i=1:nargu
     eval(sprintf('fwrite(fid,p{%d});',i));
     fclose(fid);
   else  
-    eval(sprintf('fid=fopen(\047input/%s.bin\047,\047wb\047);',name{i}));
+    eval(sprintf('fid=fopen(\047input/p%d.bin\047,\047wb\047);',i));
     eval(sprintf('fwrite(fid,p{%d},\047double\047);',i));
     fclose(fid);
   end
