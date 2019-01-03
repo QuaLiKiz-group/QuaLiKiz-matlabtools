@@ -1,3 +1,5 @@
+This project has moved to GitLab: https://gitlab.com/qualikiz-group/QuaLiKiz-matlabtools
+
 # QuaLiKiz-pythontools
 
 *A collection of tools for QuaLiKiz in MATLAB.*
